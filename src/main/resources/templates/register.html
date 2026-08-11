@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrieren | yPosts</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body class="auth-page">
+<div class="auth-shell">
+    <div class="card auth-card wide">
+        <h1>Konto erstellen</h1>
+        <p class="subtitle">Registriere dich mit eindeutigem Benutzernamen und E-Mail-Adresse.</p>
+
+        <div class="alert error" th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+
+        <form th:action="@{/register}" th:object="${registrationForm}" method="post" class="stack gap-md">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+            <label class="field">
+                <span>Benutzername</span>
+                <input type="text" th:field="*{username}" autocomplete="username" required>
+                <small class="error-text" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
+            </label>
+
+            <label class="field">
+                <span>E-Mail</span>
+                <input type="email" th:field="*{email}" autocomplete="email" required>
+                <small class="error-text" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+            </label>
+
+            <label class="field">
+                <span>Passwort</span>
+                <input type="password" th:field="*{password}" autocomplete="new-password" required>
+                <small class="error-text" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+            </label>
+
+            <label class="field">
+                <span>Passwort bestätigen</span>
+                <input type="password" th:field="*{confirmPassword}" autocomplete="new-password" required>
+                <small class="error-text" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></small>
+                <small class="error-text" th:if="${#fields.hasErrors('passwordConfirmed')}" th:errors="*{passwordConfirmed}"></small>
+            </label>
+
+            <label class="field">
+                <span>Profilbeschreibung (optional)</span>
+                <textarea th:field="*{bio}" rows="4" maxlength="500"></textarea>
+                <small class="error-text" th:if="${#fields.hasErrors('bio')}" th:errors="*{bio}"></small>
+            </label>
+
+            <button type="submit" class="btn btn-primary">Registrieren</button>
+        </form>
+
+        <p class="muted center margin-top-lg">
+            Bereits registriert?
+            <a th:href="@{/login}">Zum Login</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>
+

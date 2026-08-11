@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: yposts-db
+    environment:
+      POSTGRES_USER: yposts
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: yposts
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

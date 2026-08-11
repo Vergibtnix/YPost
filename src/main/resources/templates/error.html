@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fehler | yPosts</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="auth-shell">
+    <div class="card auth-card wide">
+        <h1>Etwas ist schiefgelaufen</h1>
+        <p class="subtitle" th:text="${errorMessage != null ? errorMessage : 'Unbekannter Fehler.'}"></p>
+        <div class="actions-row center">
+            <a class="btn btn-primary" th:href="@{/feed}">Zum Feed</a>
+            <a class="btn btn-secondary" th:href="@{/login}">Zum Login</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

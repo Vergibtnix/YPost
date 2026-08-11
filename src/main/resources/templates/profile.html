@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' | yPosts'"></title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<header class="topbar">
+    <div class="container topbar-inner">
+        <a class="brand" th:href="@{/feed}">yPosts</a>
+        <nav class="nav-links">
+            <a th:href="@{/feed}">Feed</a>
+            <a th:href="@{/users/{username}(username=${currentUsername})}">Mein Profil</a>
+            <form th:action="@{/logout}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit" class="btn btn-secondary btn-small">Logout</button>
+            </form>
+        </nav>
+    </div>
+</header>
+
+<main class="container page-grid single-column">
+    <section class="card profile-header">
+        <div class="profile-title-row">
+            <div>
+                <h1 th:text="${profile.username}"></h1>
+                <p class="subtitle" th:text="${profile.bio != null and !#strings.isEmpty(profile.bio) ? profile.bio : 'Keine Profilbeschreibung vorhanden.'}"></p>
+            </div>
+            <span class="own-post-label" th:if="${profile.ownProfile}">Dein Profil</span>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <strong th:text="${profile.postCount}"></strong>
+                <span>Posts</span>
+            </div>
+            <div class="stat-card">
+                <strong th:text="${profile.totalLikes}"></strong>
+                <span>Erhaltene Likes</span>
+            </div>
+            <div class="stat-card">
+                <strong th:text="${profile.email}"></strong>
+                <span>E-Mail</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="feed-section">
+        <div class="feed-header">
+            <div>
+                <h2>Posts von <span th:text="${profile.username}"></span></h2>
+                <p class="muted">Sortiert nach Erstellungsdatum, neueste zuerst</p>
+            </div>
+        </div>
+
+        <div class="post-list" th:if="${!#lists.isEmpty(profile.posts)}">
+            <article class="card post-card" th:each="post : ${profile.posts}">
+                <div class="post-meta">
+                    <a class="user-link" th:href="@{/users/{username}(username=${post.authorUsername})}" th:text="${post.authorUsername}"></a>
+                    <span th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy HH:mm')}"></span>
+                </div>
+                <p class="post-content" th:text="${post.content}"></p>
+                <div class="post-actions">
+                    <span class="like-badge">❤️ <span th:text="${post.likeCount}"></span></span>
+                    <form th:if="${!post.ownPost}" th:action="@{/posts/{postId}/like(postId=${post.id})}" method="post">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <input type="hidden" name="redirect" th:value="@{/users/{username}(username=${profile.username})}">
+                        <button type="submit" class="btn btn-like" th:text="${post.likedByCurrentUser} ? 'Unlike' : 'Like'"></button>
+                    </form>
+                    <span class="own-post-label" th:if="${post.ownPost}">Eigener Post</span>
+                </div>
+            </article>
+        </div>
+
+        <div class="card empty-state" th:if="${#lists.isEmpty(profile.posts)}">
+            Dieser Benutzer hat noch keine Posts erstellt.
+        </div>
+    </section>
+</main>
+</body>
+</html>
+
+
