@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>User-Suche | yPosts</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="single-column">
+
+<div class="container">
+
+  <h1>User-Suche</h1>
+
+  <form th:action="@{/feed/search}" method="get" class="stack gap-md">
+    <label class="field">
+      <span>Suche nach Benutzername</span>
+      <input type="text" name="q" th:value="${query}">
+    </label>
+    <button class="btn btn-primary">Suchen</button>
+  </form>
+
+  <div class="card" th:if="${results}">
+    <h2>Ergebnisse</h2>
+
+    <div th:if="${#lists.isEmpty(results)}" class="muted">
+      Keine Benutzer gefunden.
+    </div>
+
+    <ul th:if="${!#lists.isEmpty(results)}">
+      <li th:each="user : ${results}">
+        <a th:href="@{/profile/{username}(username=${user.username})}"
+           th:text="${user.username}"></a>
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

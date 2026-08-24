@@ -21,20 +21,36 @@ public class LikeController {
     private final CurrentUserService currentUserService;
 
     @PostMapping("/{postId}/like")
-    public String toggleLike(@PathVariable Long postId,
-                             @RequestParam(name = "redirect", defaultValue = "/feed") String redirect,
-                             Authentication authentication,
-                             RedirectAttributes redirectAttributes) {
+    public String like(@PathVariable Long postId,
+                       @RequestParam(name = "redirect", defaultValue = "/feed") String redirect,
+                       Authentication authentication,
+                       RedirectAttributes redirectAttributes) {
+
         User currentUser = currentUserService.requireCurrentUser(authentication);
+
         try {
-            postService.toggleLike(postId, currentUser);
+            postService.likePost(postId, currentUser);
         } catch (IllegalArgumentException exception) {
             redirectAttributes.addFlashAttribute("errorMessage", exception.getMessage());
         }
 
-        boolean safePath = redirect != null && redirect.startsWith("/") && !redirect.startsWith("//");
-        String safeRedirect = safePath ? redirect : "/feed";
-        return "redirect:" + safeRedirect;
+        return "redirect:" + redirect;
+    }
+
+    @PostMapping("/{postId}/dislike")
+    public String dislike(@PathVariable Long postId,
+                          @RequestParam(name = "redirect", defaultValue = "/feed") String redirect,
+                          Authentication authentication,
+                          RedirectAttributes redirectAttributes) {
+
+        User currentUser = currentUserService.requireCurrentUser(authentication);
+
+        try {
+            postService.dislikePost(postId, currentUser);
+        } catch (IllegalArgumentException exception) {
+            redirectAttributes.addFlashAttribute("errorMessage", exception.getMessage());
+        }
+
+        return "redirect:" + redirect;
     }
 }
-

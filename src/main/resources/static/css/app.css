@@ -16,6 +16,30 @@
     box-sizing: border-box;
 }
 
+.dark-toggle {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+body.dark .dark-toggle {
+    background: #1a1a1a;
+    border-color: #333;
+}
+
+
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
@@ -213,12 +237,6 @@ body {
     border-color: #d1d5db;
 }
 
-.btn-like {
-    background: #fee2e2;
-    color: #7f1d1d;
-    border-color: #fecaca;
-}
-
 .btn-small {
     padding: 0.35rem 0.6rem;
     font-size: 0.85rem;
@@ -243,63 +261,37 @@ body {
     border-color: #fca5a5;
 }
 
-.auth-page {
-    min-height: 100vh;
+.btn-edit {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 0.35rem 0.6rem;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
-.auth-shell {
-    min-height: 100vh;
-    display: grid;
-    place-items: center;
-    padding: 1rem;
+.btn-edit:hover {
+    background: #1d4ed8;
 }
 
-.auth-card {
-    width: min(450px, 92vw);
+.btn-delete {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 0.35rem 0.6rem;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
-.auth-card.wide {
-    width: min(620px, 95vw);
+.btn-delete:hover {
+    background: #b91c1c;
 }
 
-.center {
-    text-align: center;
-}
-
-.margin-top-lg {
-    margin-top: 1rem;
-}
-
-.demo-box {
-    margin-top: 1rem;
-    border-top: 1px solid var(--border);
-    padding-top: 0.9rem;
-    color: var(--muted);
-    font-size: 0.92rem;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.8rem;
-    margin-top: 0.9rem;
-}
-
-.stat-card {
+.edit-input {
+    padding: 0.35rem 0.5rem;
+    margin-right: 0.4rem;
+    border-radius: 8px;
     border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 0.75rem;
-    display: grid;
-    gap: 0.25rem;
-}
-
-.stat-card strong {
-    font-size: 1.1rem;
-}
-
-.actions-row {
-    display: flex;
-    gap: 0.6rem;
 }
 
 .empty-state {
@@ -321,5 +313,199 @@ body {
     .stats-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* ----------------------------- */
+/* 👍 / 👎 NEUE STYLES */
+/* ----------------------------- */
+
+.reaction-badges {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.like-badge {
+    color: #2563eb;
+    font-weight: bold;
+}
+
+.dislike-badge {
+    color: #7f1d1d;
+    font-weight: bold;
+}
+
+.btn-like {
+    background: #dbeafe;
+    color: #1e40af;
+    border-color: #bfdbfe;
+}
+
+.btn-like:hover {
+    background: #bfdbfe;
+}
+
+.btn-dislike {
+    background: #fee2e2;
+    color: #991b1b;
+    border-color: #fecaca;
+}
+
+.btn-dislike:hover {
+    background: #fecaca;
+}
+
+/* ----------------------------- */
+/* LOGIN PAGE STYLING */
+/* ----------------------------- */
+
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: var(--bg);
+}
+
+.login-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    width: min(380px, 90vw);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.login-card h1 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: var(--primary);
+}
+
+.login-card .field {
+    margin-bottom: 1rem;
+}
+
+.login-card button {
+    width: 100%;
+}
+
+/* ----------------------------- */
+/* DARK MODE */
+/* ----------------------------- */
+
+body.dark {
+    --bg: #0f0f0f;
+    --card: #1a1a1a;
+    --text: #e5e5e5;
+    --muted: #9ca3af;
+    --border: #2d2d2d;
+    --primary: #3b82f6;
+    --primary-dark: #1e3a8a;
+    --success-bg: #064e3b;
+    --success-text: #6ee7b7;
+    --error-bg: #4c0519;
+    --error-text: #fda4af;
+    background: var(--bg);
+}
+
+body.dark .card {
+    background: var(--card);
+    border-color: var(--border);
+}
+
+body.dark input,
+body.dark textarea {
+    background: #111;
+    color: #e5e5e5;
+    border-color: #333;
+}
+
+body.dark .topbar {
+    background: #1a1a1a;
+    border-bottom-color: #333;
+}
+
+body.dark a {
+    color: #93c5fd;
+}
+
+body.dark .btn-primary {
+    background: #3b82f6;
+    color: white;
+}
+
+body.dark .btn-secondary {
+    background: #374151;
+    color: #e5e5e5;
+    border-color: #4b5563;
+}
+
+body.dark .btn-like {
+    background: #1e40af;
+    color: #dbeafe;
+}
+
+body.dark .btn-dislike {
+    background: #7f1d1d;
+    color: #fee2e2;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.page-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 600;
+}
+
+.page-btn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.page-info {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+/* Dark Mode */
+body.dark .page-btn {
+    background: #1a1a1a;
+    border-color: #333;
+    color: #e5e5e5;
+}
+
+body.dark .page-btn:hover {
+    background: #3b82f6;
+    color: white;
+}
+
+body.dark .page-info {
+    color: #9ca3af;
+}
+
+.search-box {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 0.6rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
 }
 

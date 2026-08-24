@@ -20,6 +20,14 @@ public interface PostLikeRepository extends JpaRepository<PostLike, Long> {
 
     @Query("select l.post.id from PostLike l where l.user.id = :userId")
     Set<Long> findLikedPostIdsByUserId(@Param("userId") Long userId);
+
+    boolean existsByPostAndUserAndDislikedFalse(Post post, User user);
+
+    boolean existsByPostAndUserAndDislikedTrue(Post post, User user);
+
+    long countByPostAndDislikedTrue(Post post);
+
+    long countByPostAndDislikedFalse(Post post);
+
+    void deleteByPostAndUser(Post post, User user);
 }
-
-

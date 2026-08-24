@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 @Table(name = "post_likes", uniqueConstraints = {
         @UniqueConstraint(name = "uk_post_likes_post_user", columnNames = {"post_id", "user_id"})
 })
+
 public class PostLike {
 
     @Id
@@ -31,6 +32,9 @@ public class PostLike {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
+
+    @Column(nullable = false)
+    private boolean disliked = false;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
@@ -46,4 +50,3 @@ public class PostLike {
         }
     }
 }
-

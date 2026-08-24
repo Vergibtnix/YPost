@@ -12,14 +12,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.example.YPost.service.UserService;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
-    private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
     @Transactional
     public User register(RegistrationForm form) {
@@ -77,5 +80,14 @@ public class UserService implements UserDetailsService {
                 .roles(user.getRole().replace("ROLE_", ""))
                 .build();
     }
+
+    public List<User> searchUsers(String query) {
+        if (query == null || query.isBlank()) {
+            return List.of();
+        }
+        return userRepository.searchUsers(query.trim());
+    }
+
+
 }
 

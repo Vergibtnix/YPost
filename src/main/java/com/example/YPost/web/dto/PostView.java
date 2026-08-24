@@ -8,8 +8,8 @@ public record PostView(
         LocalDateTime createdAt,
         String authorUsername,
         long likeCount,
+        long dislikeCount,
         boolean likedByCurrentUser,
+        boolean dislikedByCurrentUser,
         boolean ownPost
-) {
-}
-
+) {}
